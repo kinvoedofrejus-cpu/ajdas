@@ -13,7 +13,7 @@ run_worker_first = ["/api/*"]
 [[d1_databases]]
 binding = "DB"
 database_name = "ajdas_db"
-database_id = "REMPLACER_PAR_ID_APRES_CREATION"
+database_id = "19c21e27-c79a-493b-ab2f-a79400928abf"
 
 # Bucket R2 : stocke les fichiers eux-mêmes (PDF, images...)
 [[r2_buckets]]
