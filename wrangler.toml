@@ -1,0 +1,27 @@
+name = "ajdas-site"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+
+# Sert les fichiers statiques du dossier public/ (index.html, admin.html, logo...)
+# et laisse le Worker gérer en priorité tout ce qui commence par /api/
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
+
+# Base de données D1 : stocke les fiches (projets, documents, images)
+[[d1_databases]]
+binding = "DB"
+database_name = "ajdas_db"
+database_id = "REMPLACER_PAR_ID_APRES_CREATION"
+
+# Bucket R2 : stocke les fichiers eux-mêmes (PDF, images...)
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "ajdas-files"
+
+# Variable sensible à définir avec :
+#   wrangler secret put SESSION_SECRET
+# (ou depuis le tableau de bord Cloudflare > Settings > Variables and Secrets)
+# Le code d'accès à l'espace admin, lui, est stocké dans la base D1
+# (valeur par défaut : 1234, modifiable depuis l'espace admin > Paramètres).
