@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AJDAS — Association des Jeunes pour le Développement d'Adjarra Sota</title>
+<meta name="description" content="AJDAS accompagne la jeunesse d'Adjarra Sota à travers l'aide sociale et humanitaire, la culture et l'éducation, le sport et les loisirs.">
+<link rel="icon" href="/assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#1E4B32;
+    --green-leaf:#4C7A3D;
+    --orange:#DE6E22;
+    --orange-deep:#B6551A;
+    --teal:#1A8A78;
+    --gold:#F2A93B;
+    --bg:#F5F7F1;
+    --paper:#FFFFFF;
+    --ink:#1B241C;
+    --ink-soft:#4B564C;
+    --line:#DCE3D8;
+    --radius:14px;
+    --pad: clamp(16px, 4vw, 56px);
+    --container: 1600px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Work Sans',sans-serif;
+    line-height:1.6;
+    font-size:16px;
+  }
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk',sans-serif;
+    color:var(--green-deep);
+    line-height:1.15;
+    margin:0 0 .5em;
+    letter-spacing:-.01em;
+  }
+  a{color:var(--teal);}
+  img{max-width:100%;display:block;}
+  .wrap{width:100%;max-width:var(--container);margin:0 auto;padding:0 var(--pad);}
+
+  /* --- En-tête statique --- */
+  header.site-header{
+    background:var(--green-deep);
+    color:#fff;
+    position:sticky;
+    top:0;
+    z-index:50;
+    box-shadow:0 2px 10px rgba(0,0,0,.12);
+  }
+  .header-top{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:14px var(--pad);
+    max-width:var(--container);
+    margin:0 auto;
+  }
+  .header-top img{
+    width:52px;height:52px;border-radius:50%;
+    flex:none;
+    box-shadow:0 0 0 2px rgba(255,255,255,.5);
+  }
+  .header-top .name{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:clamp(.82rem,1.6vw,1.1rem);
+    letter-spacing:.01em;
+  }
+  .header-top .name small{
+    display:block;
+    font-family:'Work Sans',sans-serif;
+    font-weight:400;
+    font-size:.72rem;
+    color:#CFE0D2;
+    margin-top:3px;
+    letter-spacing:.02em;
+  }
+
+  /* --- Onglets : boutons 3D, bords arrondis, dégradé --- */
+  nav.tabs{
+    border-top:1px solid rgba(255,255,255,.14);
+    background:rgba(0,0,0,.08);
+  }
+  nav.tabs ul{
+    list-style:none;
+    display:flex;
+    flex-wrap:wrap;
+    margin:0 auto;
+    padding:12px var(--pad);
+    max-width:var(--container);
+    gap:10px;
+  }
+  nav.tabs a{
+    display:block;
+    white-space:nowrap;
+    color:#EAF3EA;
+    text-decoration:none;
+    font-size:.88rem;
+    font-weight:600;
+    padding:11px 20px;
+    border-radius:12px;
+    background:linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.16);
+    box-shadow:0 3px 0 rgba(0,0,0,.22), 0 6px 12px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.22);
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  nav.tabs a:hover{transform:translateY(-1px);}
+  nav.tabs a.active{
+    color:#fff;
+    background:linear-gradient(180deg, var(--orange), var(--orange-deep));
+    border-color:transparent;
+    box-shadow:0 3px 0 #8a3f13, 0 8px 18px rgba(222,110,34,.4), inset 0 1px 0 rgba(255,255,255,.3);
+    transform:translateY(1px);
+  }
+  nav.tabs a:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.2), inset 0 1px 4px rgba(0,0,0,.3);}
+
+  @media (max-width:640px){
+    nav.tabs ul{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:10px var(--pad);}
+    nav.tabs ul::-webkit-scrollbar{display:none;}
+  }
+
+  main{padding:40px 0 80px;}
+  section.page{display:none;}
+  section.page.active{display:block;animation:fade .35s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+  .eyebrow{color:var(--orange);font-weight:600;font-size:.82rem;margin-bottom:.4em;}
+
+  /* Accueil */
+  .hero{
+    display:grid;
+    grid-template-columns:1.15fr .85fr;
+    gap:56px;
+    align-items:center;
+    padding:24px 0 48px;
+  }
+  .hero h1{font-size:clamp(1.8rem,3.4vw,3.1rem);max-width:18ch;}
+  .hero p.lead{font-size:1.1rem;color:var(--ink-soft);max-width:50ch;}
+  .hero-art{
+    position:relative;
+    padding:5px;
+    border-radius:28px;
+    background:linear-gradient(135deg, var(--gold), var(--teal) 55%, var(--green-deep));
+    box-shadow:0 24px 48px rgba(20,50,35,.28), 0 4px 14px rgba(20,50,35,.15);
+  }
+  .hero-art .inner{
+    background:var(--paper);
+    border-radius:24px;
+    padding:12px;
+  }
+  .hero-art img{border-radius:18px;}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;}
+  .btn{
+    display:inline-block;
+    padding:13px 24px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:.94rem;
+    text-decoration:none;
+    border:1px solid transparent;
+  }
+  .btn-primary{background:var(--orange);color:#fff;}
+  .btn-ghost{border-color:var(--green-deep);color:var(--green-deep);}
+
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:18px;
+    margin:48px 0;
+  }
+  .stat{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+  }
+  .stat .n{font-family:'Space Grotesk',sans-serif;font-size:1.7rem;color:var(--green-deep);font-weight:700;}
+  .stat .l{color:var(--ink-soft);font-size:.86rem;}
+
+  .pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin:40px 0;}
+  .pillar{
+    background:var(--paper);
+    border-radius:var(--radius);
+    padding:24px;
+    border:1px solid var(--line);
+    border-top:4px solid var(--teal);
+  }
+  .pillar:nth-child(2){border-top-color:var(--orange);}
+  .pillar:nth-child(3){border-top-color:var(--gold);}
+  .pillar h3{font-size:1.08rem;margin-bottom:.35em;}
+  .pillar p{color:var(--ink-soft);font-size:.93rem;margin:0;}
+
+  /* Qui sommes-nous */
+  .info-grid{display:grid;grid-template-columns:2fr 1fr;gap:32px;margin-top:22px;align-items:start;}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px;}
+  .card + .card{margin-top:18px;}
+  dl.facts{margin:0;}
+  dl.facts div{padding:11px 0;border-bottom:1px solid var(--line);}
+  dl.facts div:last-child{border-bottom:none;}
+  dl.facts dt{font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);}
+  dl.facts dd{margin:2px 0 0;font-weight:500;}
+  .org-chart{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+  .org-item{
+    background:var(--bg);
+    border-radius:10px;
+    padding:13px 15px;
+    font-size:.92rem;
+  }
+  .org-item b{display:block;color:var(--green-deep);font-family:'Space Grotesk',sans-serif;font-size:.9rem;}
+
+  /* Grilles de contenu dynamique */
+  .grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;margin-top:24px;}
+  .content-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .content-card .thumb{aspect-ratio:4/3;background:var(--bg);overflow:hidden;}
+  .content-card .thumb img{width:100%;height:100%;object-fit:cover;}
+  .content-card .body{padding:15px 17px;}
+  .content-card h3{font-size:1rem;margin-bottom:.3em;}
+  .content-card p{font-size:.87rem;color:var(--ink-soft);margin:0;}
+
+  .doc-list{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .doc-list li{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:15px 17px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .doc-list .ic{
+    width:38px;height:38px;border-radius:9px;background:var(--green-deep);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex:none;
+  }
+  .doc-list .meta{flex:1;min-width:0;}
+  .doc-list .meta h3{font-size:.96rem;margin:0 0 2px;}
+  .doc-list .meta p{margin:0;font-size:.82rem;color:var(--ink-soft);}
+  .doc-list a.dl{font-weight:600;font-size:.86rem;white-space:nowrap;}
+  .doc-list .dl-disabled{color:var(--ink-soft);font-weight:500;font-style:italic;}
+
+  .empty-state{
+    border:1px dashed var(--line);
+    border-radius:var(--radius);
+    padding:36px 20px;
+    text-align:center;
+    color:var(--ink-soft);
+    margin-top:24px;
+    font-size:.94rem;
+  }
+
+  /* Documents : filtres par catégorie (reprend les rubriques de l'espace admin) */
+  .doc-filters{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+  .doc-filter{
+    padding:10px 20px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:var(--paper);
+    color:var(--ink-soft);
+    font-weight:600;
+    font-size:.88rem;
+    cursor:pointer;
+    font-family:inherit;
+    box-shadow:0 2px 0 rgba(0,0,0,.03);
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease, color .12s ease;
+  }
+  .doc-filter:hover{transform:translateY(-1px);}
+  .doc-filter.active{
+    background:linear-gradient(180deg, var(--teal), #126157);
+    color:#fff;
+    border-color:transparent;
+    box-shadow:0 3px 0 #0c463e, 0 6px 14px rgba(26,138,120,.35);
+  }
+  .doc-panel{margin-top:8px;}
+
+  /* Contact */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:22px;align-items:start;}
+  .contact-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:18px;}
+  .contact-item .ic{
+    width:36px;height:36px;border-radius:50%;background:var(--teal);color:#fff;
+    display:flex;align-items:center;justify-content:center;flex:none;font-size:.85rem;
+  }
+  .contact-item h3{font-size:.94rem;margin:0 0 2px;color:var(--ink);}
+  .contact-item p{margin:0;color:var(--ink-soft);font-size:.92rem;}
+
+  footer{
+    background:var(--green-deep);
+    color:#CFE0D2;
+    text-align:center;
+    padding:30px 20px;
+    font-size:.84rem;
+  }
+  footer .foot-name{margin-bottom:16px;letter-spacing:.02em;}
+  .btn-gestion{
+    background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.04));
+    border:1px solid rgba(255,255,255,.3);
+    color:#fff;
+    padding:10px 24px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:.84rem;
+    cursor:pointer;
+    font-family:'Work Sans',sans-serif;
+    box-shadow:0 3px 0 rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.25);
+    transition:transform .12s ease;
+  }
+  .btn-gestion:hover{transform:translateY(-1px);}
+  .btn-gestion:active{transform:translateY(2px);box-shadow:none;}
+  .credit{margin-top:18px;font-size:.76rem;color:#9FB69F;letter-spacing:.03em;}
+
+  /* Lightbox */
+  .lightbox{
+    position:fixed;inset:0;background:rgba(15,20,15,.86);
+    display:none;align-items:center;justify-content:center;padding:24px;z-index:100;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:100%;max-height:88vh;border-radius:10px;}
+  .lightbox-dl{
+    position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+    background:var(--orange);color:#fff;padding:11px 22px;border-radius:999px;
+    font-weight:600;font-size:.88rem;text-decoration:none;
+  }
+
+  /* Modal Gestion (code d'accès) */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(15,20,15,.55);
+    display:none;align-items:center;justify-content:center;padding:20px;z-index:110;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    background:var(--paper);border-radius:18px;padding:28px;width:100%;max-width:340px;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+  }
+  .modal h3{margin-top:0;font-size:1.1rem;}
+  .modal p{color:var(--ink-soft);font-size:.88rem;margin-top:0;}
+  .modal input{
+    width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;
+    font-size:1.1rem;letter-spacing:.15em;text-align:center;margin:6px 0 4px;
+  }
+  .modal .row{display:flex;gap:10px;margin-top:16px;}
+  .modal .row .btn{flex:1;text-align:center;border:none;cursor:pointer;font-family:inherit;}
+  .modal .btn-cancel{background:var(--bg);color:var(--ink-soft);}
+  .modal .btn-confirm{background:var(--green-deep);color:#fff;}
+  .modal .err{color:#B4472E;font-size:.85rem;margin:8px 0 0;min-height:1.2em;}
+
+  /* --- Tablette --- */
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr;gap:28px;}
+    .hero h1{max-width:none;}
+    .info-grid{grid-template-columns:1fr;}
+  }
+
+  /* --- Mobile --- */
+  @media (max-width:640px){
+    .header-top{padding:12px var(--pad);gap:12px;}
+    .header-top img{width:44px;height:44px;}
+    main{padding:28px 0 60px;}
+    .contact-grid{grid-template-columns:1fr;}
+    .stats{grid-template-columns:1fr 1fr;}
+  }
+
+  /* --- Grand écran / très large --- */
+  @media (min-width:1500px){
+    .hero h1{font-size:3.3rem;}
+    .grid-cards{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
+  }
+  @media (min-width:2000px){
+    :root{--container:1900px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <img src="/assets/logo.jpg" alt="Logo AJDAS">
+    <div class="name">
+      ASSOCIATION DES JEUNES POUR LE DÉVELOPPEMENT D'ADJARRA SOTA
+      <small>AJDAS · Adjarra, Ouémé, Bénin</small>
+    </div>
+  </div>
+  <nav class="tabs">
+    <ul>
+      <li><a href="#accueil" data-tab="accueil">Accueil</a></li>
+      <li><a href="#qui-sommes-nous" data-tab="qui-sommes-nous">Qui sommes-nous</a></li>
+      <li><a href="#projets" data-tab="projets">Nos projets</a></li>
+      <li><a href="#galerie" data-tab="galerie">Galerie</a></li>
+      <li><a href="#documents" data-tab="documents">Documents</a></li>
+      <li><a href="#contact" data-tab="contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <!-- ACCUEIL -->
+  <section id="accueil" class="page">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Adjarra Sota, Ouémé, Bénin</p>
+        <h1>Une jeunesse unie qui fait grandir son quartier</h1>
+        <p class="lead">L'AJDAS rassemble les jeunes d'Adjarra Sota autour de trois missions : l'aide sociale et humanitaire, la culture et l'éducation, le sport et les loisirs.</p>
+        <div class="cta-row">
+          <a href="#projets" class="btn btn-primary" data-tab-link="projets">Découvrir nos projets</a>
+          <a href="#contact" class="btn btn-ghost" data-tab-link="contact">Nous contacter</a>
+        </div>
+      </div>
+      <div class="hero-art"><div class="inner"><img src="/assets/logo.jpg" alt="Illustration AJDAS : une famille unie"></div></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="n">21</div><div class="l">membres au Bureau Exécutif</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">domaines d'action</div></div>
+      <div class="stat"><div class="n">2025</div><div class="l">reconnue officiellement</div></div>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <h3>Aide sociale &amp; humanitaire</h3>
+        <p>Soutien aux familles et aux personnes vulnérables du quartier Sota.</p>
+      </div>
+      <div class="pillar">
+        <h3>Culture &amp; éducation</h3>
+        <p>Actions pour l'instruction et la valorisation culturelle des jeunes.</p>
+      </div>
+      <div class="pillar">
+        <h3>Sport &amp; loisirs</h3>
+        <p>Activités sportives et récréatives pour rassembler la jeunesse.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUI SOMMES-NOUS -->
+  <section id="qui-sommes-nous" class="page">
+    <p class="eyebrow">Qui sommes-nous</p>
+    <h2>L'Association des Jeunes pour le Développement d'Adjarra Sota</h2>
+    <div class="info-grid">
+      <div>
+        <div class="card">
+          <p style="margin-top:0;color:var(--ink-soft);">L'AJDAS est une association reconnue en République du Bénin, née de la volonté des jeunes du quartier Sota (Adjarra 2) de se mobiliser pour le développement de leur communauté. Elle agit autour de trois axes complémentaires : l'aide sociale et humanitaire, la culture et l'éducation, ainsi que le sport et les loisirs.</p>
+          <p style="margin-bottom:0;color:var(--ink-soft);">Son fonctionnement repose sur une gouvernance associative classique : une Assemblée Générale qui réunit les membres, un Bureau Exécutif chargé de la mise en œuvre des actions, et un Commissariat aux comptes garant de la transparence financière.</p>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0;">Notre organisation</h3>
+          <div class="org-chart">
+            <div class="org-item"><b>Assemblée Générale</b>L'organe souverain, réunissant l'ensemble des membres de l'association.</div>
+            <div class="org-item"><b>Bureau Exécutif — 21 membres</b>Chargé de la conduite des activités et projets au quotidien.</div>
+            <div class="org-item"><b>Commissariat aux comptes</b>Assure le contrôle et la transparence des finances de l'association.</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0;">Fiche d'identité</h3>
+        <dl class="facts">
+          <div><dt>Reconnaissance légale</dt><dd>Loi n°2025-19 du 22 juillet 2025, République du Bénin</dd></div>
+          <div><dt>Siège social</dt><dd>Quartier Sota, Arrondissement d'Adjarra 2, Commune d'Adjarra, Département de l'Ouémé</dd></div>
+          <div><dt>Téléphone</dt><dd>01 94 94 51 87</dd></div>
+          <div><dt>Domaines d'action</dt><dd>Aide sociale, culture &amp; éducation, sport &amp; loisirs</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOS PROJETS -->
+  <section id="projets" class="page">
+    <p class="eyebrow">Nos projets</p>
+    <h2>Ce que nous mettons en œuvre sur le terrain</h2>
+    <div id="projets-list" class="grid-cards"></div>
+    <div id="projets-empty" class="empty-state" hidden>Les projets de l'association seront bientôt publiés ici.</div>
+  </section>
+
+  <!-- GALERIE -->
+  <section id="galerie" class="page">
+    <p class="eyebrow">Galerie</p>
+    <h2>Nos activités en images</h2>
+    <div id="galerie-list" class="grid-cards"></div>
+    <div id="galerie-empty" class="empty-state" hidden>Aucune photo n'a encore été ajoutée à la galerie.</div>
+  </section>
+
+  <!-- DOCUMENTS (avec filtres reprenant les rubriques de l'espace admin) -->
+  <section id="documents" class="page">
+    <p class="eyebrow">Documents</p>
+    <h2>Statuts, rapports, projets et ressources de l'association</h2>
+    <div class="doc-filters">
+      <button class="doc-filter active" data-doc-type="document">Documents</button>
+      <button class="doc-filter" data-doc-type="report">Rapports</button>
+      <button class="doc-filter" data-doc-type="image">Images</button>
+      <button class="doc-filter" data-doc-type="project">Projets</button>
+    </div>
+    <div class="doc-panel">
+      <ul id="doc-hub-list-files" class="doc-list" hidden></ul>
+      <div id="doc-hub-list-cards" class="grid-cards" hidden></div>
+      <div id="doc-hub-empty" class="empty-state" hidden></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="page">
+    <p class="eyebrow">Contact</p>
+    <h2>Échanger avec l'AJDAS</h2>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-item">
+          <div class="ic">☎</div>
+          <div><h3>Téléphone</h3><p><a href="tel:0194945187">01 94 94 51 87</a></p></div>
+        </div>
+        <div class="contact-item">
+          <div class="ic">⌂</div>
+          <div><h3>Adresse</h3><p>Quartier Sota, Arrondissement d'Adjarra 2, Commune d'Adjarra, Département de l'Ouémé, Bénin</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0;">Nous rendre visite</h3>
+        <p style="color:var(--ink-soft);margin-bottom:0;">L'AJDAS accueille les membres et partenaires au siège social, dans le quartier Sota. N'hésitez pas à appeler avant votre passage.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="foot-name">ASSOCIATION DES JEUNES POUR LE DÉVELOPPEMENT D'ADJARRA SOTA — Adjarra, Bénin</div>
+  <button class="btn-gestion" id="gestion-btn">Gestion</button>
+  <div class="credit">Par @Kinvos_Dev</div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <img id="lightbox-img" src="" alt="">
+  <a id="lightbox-dl" class="lightbox-dl" download hidden onclick="event.stopPropagation()">⬇ Télécharger</a>
+</div>
+
+<!-- Modal Gestion : demande le code d'accès admin -->
+<div class="modal-overlay" id="gestion-modal">
+  <div class="modal">
+    <h3>Espace administrateur</h3>
+    <p>Entrez le code d'accès pour gérer les projets, la galerie, les documents et les rapports.</p>
+    <input type="password" inputmode="numeric" id="gestion-code" placeholder="Code" autocomplete="off">
+    <p class="err" id="gestion-err"></p>
+    <div class="row">
+      <button class="btn btn-cancel" id="gestion-cancel">Annuler</button>
+      <button class="btn btn-confirm" id="gestion-confirm">Valider</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = "/api/items";
+
+function switchTab(tab){
+  document.querySelectorAll("section.page").forEach(s => s.classList.toggle("active", s.id === tab));
+  document.querySelectorAll("nav.tabs a").forEach(a => a.classList.toggle("active", a.dataset.tab === tab));
+  window.scrollTo({top:0,behavior:"instant"});
+}
+
+function currentTabFromHash(){
+  const valid = ["accueil","qui-sommes-nous","projets","galerie","documents","contact"];
+  const h = location.hash.replace("#","");
+  return valid.includes(h) ? h : "accueil";
+}
+
+window.addEventListener("hashchange", () => switchTab(currentTabFromHash()));
+document.querySelectorAll("[data-tab-link]").forEach(el=>{
+  el.addEventListener("click", e=>{ location.hash = el.dataset.tabLink; });
+});
+switchTab(currentTabFromHash());
+
+function escapeHtml(str){
+  return (str || "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+async function loadItems(type){
+  try{
+    const res = await fetch(`${API}?type=${type}`);
+    const data = await res.json();
+    return data.items || [];
+  }catch(e){
+    return [];
+  }
+}
+
+function fileUrl(item){
+  return item.r2_key ? `/api/files/${encodeURIComponent(item.r2_key)}` : "";
+}
+
+async function renderProjets(){
+  const items = await loadItems("project");
+  const list = document.getElementById("projets-list");
+  document.getElementById("projets-empty").hidden = items.length > 0;
+  list.innerHTML = items.map(i => `
+    <div class="content-card">
+      ${i.r2_key ? `<div class="thumb"><img src="${fileUrl(i)}" alt="${escapeHtml(i.title)}" loading="lazy"></div>` : ""}
+      <div class="body">
+        <h3>${escapeHtml(i.title)}</h3>
+        <p>${escapeHtml(i.description)}</p>
+      </div>
+    </div>`).join("");
+}
+
+async function renderGalerie(){
+  const items = await loadItems("image");
+  const list = document.getElementById("galerie-list");
+  document.getElementById("galerie-empty").hidden = items.length > 0;
+  list.innerHTML = items.map(i => `
+    <div class="content-card">
+      <div class="thumb"><img src="${fileUrl(i)}" alt="${escapeHtml(i.title)}" loading="lazy" data-full="${fileUrl(i)}" data-name="${escapeHtml(i.filename||"")}" data-downloadable="${i.downloadable ? "1":"0"}" class="gal-img" style="cursor:zoom-in;"></div>
+      <div class="body"><h3>${escapeHtml(i.title)}</h3></div>
+    </div>`).join("");
+  list.querySelectorAll(".gal-img").forEach(img=>{
+    img.addEventListener("click", ()=>{
+      document.getElementById("lightbox-img").src = img.dataset.full;
+      const dl = document.getElementById("lightbox-dl");
+      if(img.dataset.downloadable === "1"){
+        dl.href = img.dataset.full;
+        dl.download = img.dataset.name || "";
+        dl.hidden = false;
+      } else {
+        dl.hidden = true;
+      }
+      document.getElementById("lightbox").classList.add("open");
+    });
+  });
+}
+
+document.getElementById("lightbox").addEventListener("click", ()=>{
+  document.getElementById("lightbox").classList.remove("open");
+});
+
+renderProjets();
+renderGalerie();
+
+/* --- Onglet Documents : filtres qui reprennent les rubriques de l'espace admin --- */
+const DOC_HUB_LABELS = {
+  document: { empty: "Aucun document n'a encore été mis en ligne.", view: "list" },
+  report:   { empty: "Aucun rapport n'a encore été publié.", view: "list" },
+  image:    { empty: "Aucune photo n'a encore été ajoutée à la galerie.", view: "cards" },
+  project:  { empty: "Les projets de l'association seront bientôt publiés ici.", view: "cards" },
+};
+let currentDocType = "document";
+
+function renderDocHubList(items){
+  const ul = document.getElementById("doc-hub-list-files");
+  ul.innerHTML = items.map(i => `
+    <li>
+      <div class="ic">${(i.filename||"").split(".").pop().slice(0,3).toUpperCase() || "DOC"}</div>
+      <div class="meta"><h3>${escapeHtml(i.title)}</h3><p>${escapeHtml(i.description)}</p></div>
+      ${i.downloadable
+        ? `<a class="dl" href="${fileUrl(i)}" download="${escapeHtml(i.filename||"")}">Télécharger</a>`
+        : `<span class="dl dl-disabled">Consultation seule</span>`}
+    </li>`).join("");
+}
+
+function renderDocHubCards(items){
+  const grid = document.getElementById("doc-hub-list-cards");
+  grid.innerHTML = items.map(i => `
+    <div class="content-card">
+      ${i.r2_key ? `<div class="thumb"><img src="${fileUrl(i)}" alt="${escapeHtml(i.title)}" loading="lazy"></div>` : ""}
+      <div class="body">
+        <h3>${escapeHtml(i.title)}</h3>
+        <p>${escapeHtml(i.description)}</p>
+      </div>
+    </div>`).join("");
+}
+
+async function renderDocHub(type){
+  currentDocType = type;
+  document.querySelectorAll(".doc-filter").forEach(b => b.classList.toggle("active", b.dataset.docType === type));
+
+  const items = await loadItems(type);
+  const cfg = DOC_HUB_LABELS[type];
+  const listEl = document.getElementById("doc-hub-list-files");
+  const cardsEl = document.getElementById("doc-hub-list-cards");
+  const emptyEl = document.getElementById("doc-hub-empty");
+
+  listEl.hidden = cfg.view !== "list";
+  cardsEl.hidden = cfg.view !== "cards";
+  emptyEl.hidden = items.length > 0;
+  emptyEl.textContent = cfg.empty;
+
+  if (cfg.view === "list") renderDocHubList(items);
+  else renderDocHubCards(items);
+}
+
+document.querySelectorAll(".doc-filter").forEach(btn=>{
+  btn.addEventListener("click", ()=> renderDocHub(btn.dataset.docType));
+});
+renderDocHub(currentDocType);
+
+/* --- Bouton Gestion : demande le code puis ouvre l'espace admin --- */
+const gestionBtn = document.getElementById("gestion-btn");
+const gestionModal = document.getElementById("gestion-modal");
+const gestionCode = document.getElementById("gestion-code");
+const gestionErr = document.getElementById("gestion-err");
+
+function openGestion(){
+  gestionModal.classList.add("open");
+  gestionErr.textContent = "";
+  gestionCode.value = "";
+  setTimeout(()=>gestionCode.focus(), 50);
+}
+function closeGestion(){ gestionModal.classList.remove("open"); }
+
+gestionBtn.addEventListener("click", openGestion);
+document.getElementById("gestion-cancel").addEventListener("click", closeGestion);
+gestionModal.addEventListener("click", e=>{ if(e.target === gestionModal) closeGestion(); });
+
+async function submitGestionCode(){
+  const code = gestionCode.value.trim();
+  gestionErr.textContent = "";
+  if(!code){ gestionErr.textContent = "Entrez un code."; return; }
+  try{
+    const res = await fetch("/api/login", {
+      method:"POST",
+      headers:{ "content-type":"application/json" },
+      body: JSON.stringify({ code }),
+    });
+    const data = await res.json();
+    if(!res.ok){ gestionErr.textContent = data.error || "Code incorrect."; return; }
+    sessionStorage.setItem("ajdas_token", data.token);
+    location.href = "/admin.html";
+  }catch(e){ gestionErr.textContent = "Connexion impossible."; }
+}
+document.getElementById("gestion-confirm").addEventListener("click", submitGestionCode);
+gestionCode.addEventListener("keydown", e=>{ if(e.key === "Enter") submitGestionCode(); });
+</script>
+</body>
+</html>
